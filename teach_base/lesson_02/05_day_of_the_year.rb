@@ -1,32 +1,28 @@
-=begin
-Заданы три числа, которые обозначают число, месяц, год (запрашиваем у пользователя). 
-Найти порядковый номер даты, начиная отсчет с начала года. 
-Учесть, что год может быть високосным. Год високосный, если он делится на четыре без остатка, 
-но если он делится на 100 без остатка, это не високосный год. 
-Однако, если он делится без остатка на 400, это високосный год.
-(Запрещено использовать встроенные в ruby методы для этого вроде Date#yday или Date#leap?)
-=end
+# frozen_string_literal: true
 
-puts "Please input the date(day, month, year)!"
+# Three numbers are specified, which indicate the day, month, year
+# (we ask the user). Find the ordinal date starting from the beginning
+# of the year. Take into account that the year may be a leap year.
+# A leap year, if it is divisible by four, but if it is divided by
+# 100 without remainder, it is not a leap year. However, if it is divisible
+# by 400, it is a leap year.(It is forbidden to use built-in ruby methods
+# for this like Date # yday or Date # leap?)
+
+puts 'Please input the date(day, month, year)!'
 day = gets.chomp.to_i
 month = gets.chomp.to_i
 year = gets.chomp.to_i
 
-#this method is not need a check about leap year or not, it is allwaus true
-def day_of_y(y,m,d) 
-  input_day = Time.new(y, m, d)
-  start_year = Time.new(y)
-  return diff = ((input_day - start_year) /60/60/24).to_i + 1
+def uncorrect_date?(day, month, year)
+  day <= 0 || day > 31 || year <= 0 || month <= 0 || month > 12
 end
 
-def  leap_year (y)
-  if (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)
-    true
-  else 
-  	false
-  end
+return puts 'Input correct date!' if uncorrect_date?(day, month, year)
+
+def date_number(day, month, year)
+  months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  months [1] = 29 if ((year % 4).zero? && year % 100 != 0) || (year % 400).zero?
+  day + months[0..month - 2].sum
 end
 
-puts "Is the #{year} a leap year? That is absolutly #{leap_year(year)}!"
-
-puts "The number of your day in #{year} year is #{day_of_y(year,month,day)}!"
+puts date_number(day, month, year)
