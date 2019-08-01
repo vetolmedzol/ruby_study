@@ -1,30 +1,35 @@
-=begin
-Сумма покупок. Пользователь вводит поочередно название товара, цену за единицу и 
-кол-во купленного товара (может быть нецелым числом). 
-Пользователь может ввести произвольное кол-во товаров до тех пор, 
-пока не введет "стоп" в качестве названия товара. 
-На основе введенных данных требуетеся:
-1. Заполнить и вывести на экран хеш, ключами которого являются названия товаров, 
-а значением - вложенный хеш, содержащий цену за единицу товара и кол-во купленного товара. 
-Также вывести итоговую сумму за каждый товар.
-2. Вычислить и вывести на экран итоговую сумму всех покупок в "корзине".
-=end
-basket = {} 
+# frozen_string_literal: true
+
+# Amount of purchases. The user enters in turn the name of the product,
+# the price per unit and the quantity of the product purchased
+# (may be a non-integer number). The user can enter an arbitrary
+# number of goods until he enters the "stop" as the name of the product.
+# Based on the data entered, you need:
+# 1. Fill in and display a hash, the keys of which are the names
+# of the goods, and the value is an embedded hash containing the price
+# per unit of goods and the quantity of goods purchased.
+# Also display the total amount for each item.
+# 2. Calculate and display the total amount of all purchases in the "basket".
+
+basket = {}
 
 loop do
-  puts "Enter product, what you want to add in basket! Enter 'stop' if you want to stoped!"
+  puts "Enter product, to add it in basket! Enter 'stop' if you want to stoped!"
   prod = gets.chomp
-  break if prod.downcase == "stop"
+  break if prod.downcase == 'stop'
+
   puts "Enter price of #{prod}!"
   price = gets.chomp.to_f
-  puts "Enter how match product you want to buy!"
+  puts 'Enter how match product you want to buy!'
   count = gets.chomp.to_f
   basket[prod] = {
-  	price: price,
+    price: price,
     count: count,
-    coast: price * count}
+    coast: price * count
+  }
 end
 
 basket_coast = 0
-basket.each { |key, value| basket_coast += value[:coast] }
+basket.each { |_key, value| basket_coast += value[:coast] }
+puts "Your basket include: #{basket}!"
 puts "All product coast : #{basket_coast}"
