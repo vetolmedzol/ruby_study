@@ -1,12 +1,12 @@
-=begin
-Заполнить массив числами фибоначи до 100
-=end
+# frozen_string_literal: true
 
-array_fibo = [0,1,1]
-next_num = array_fibo[-1] + array_fibo[-2]
+# Fill the array with fibonacci numbers up to 100
+
+array_fibo = [0, 1]
+next_num = 1
 
 while next_num <= 100
-  array_fibo.push next_num
+  array_fibo << next_num
   next_num = array_fibo[-1] + array_fibo[-2]
 end
 
