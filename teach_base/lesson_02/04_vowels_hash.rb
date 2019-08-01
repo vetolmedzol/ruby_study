@@ -1,13 +1,12 @@
-=begin
-Заполнить хеш гласными буквами, где значением будет являтся порядковый 
-номер буквы в алфавите (a - 1).
-=end
+# frozen_string_literal: true
 
-vowels_arr = ["a", "e", "i", "o", "u", "y"]
+# Fill the hash with vowels, where the value will be ordinal
+# letter number in the alphabet (a - 1).
 
-("a".."z").each_with_index {|val, index|
-  if vowels_arr.include? val 
-    vowels_hash = {index += 1 => val}
-    puts vowels_hash
-  end
-}
+vowels_arr = %w[a e i o u y]
+vowels_hash = {}
+
+('a'..'z').each_with_index do |value, index|
+  vowels_hash [index + 1] = value if vowels_arr.include? value
+end
+print vowels_hash
