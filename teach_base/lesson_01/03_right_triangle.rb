@@ -13,27 +13,24 @@ b = gets.chomp.to_f
 c = gets.chomp.to_f
 
 sides = [a, b, c].sort
-side1 = sides[2]
-side2 = sides[0]
-side3 = sides[1]
 
-def it_is_triangle?(side1, side2, side3)
-  side2 + side3 > side1 && side2.positive?
+def triangle?(sides)
+  sides[0] + sides[1] > sides[2] && sides[0].positive?
 end
 
-return puts 'It is not triangle!' unless it_is_triangle?(side1, side2, side3)
+return puts 'It is not triangle!' unless triangle?(sides)
 
-def style_triangle(side1, side2, side3, sides)
+def style_triangle(sides)
   result = []
   result << 'equilateral' if sides.uniq.size == 1
-  result << 'isosceles' if sides.uniq.size == 2
+  result << 'isosceles' if sides.uniq.size < 3
   result << 'scalene' if sides.uniq.size > 2
-  result << 'right' if triangle_right?(side1, side2, side3)
-  "Your triangle is #{result.join(' and ')}!"
+  result << 'right' if triangle_right?(sides)
+  result.join(' and ')
 end
 
-def triangle_right?(side1, side2, side3)
-  side1**2 == side2**2 + side3**2
+def triangle_right?(sides)
+  sides[2]**2 == sides[0]**2 + sides[1]**2
 end
 
-puts style_triangle(side1, side2, side3, sides)
+puts "Your triangle is #{style_triangle(sides)}!"
