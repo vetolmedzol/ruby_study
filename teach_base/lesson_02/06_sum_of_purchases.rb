@@ -21,7 +21,7 @@ loop do
   puts "Enter price of #{prod}!"
   price = gets.chomp.to_f
   puts 'Enter how match product you want to buy!'
-  count = gets.chomp.to_f
+  count = gets.chomp.to_i
   basket[prod] = {
     price: price,
     count: count,
