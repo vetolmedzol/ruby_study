@@ -12,17 +12,24 @@ puts 'Please input the date(day, month, year)!'
 day = gets.chomp.to_i
 month = gets.chomp.to_i
 year = gets.chomp.to_i
+months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-def uncorrect_date?(day, month, year)
-  day <= 0 || day > 31 || year <= 0 || month <= 0 || month > 12
+def leap_feb(year, months)
+  months[1] = 29 if ((year % 4).zero? && year % 100 != 0) || (year % 400).zero?
 end
 
-return puts 'Input correct date!' if uncorrect_date?(day, month, year)
+leap_feb(year, months)
 
-def date_number(day, month, year)
-  months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-  months [1] = 29 if ((year % 4).zero? && year % 100 != 0) || (year % 400).zero?
-  day + months[0..month - 2].sum
+def correct_date?(day, month, months)
+  months.at(month - 1) < day || month <= 0 || day <= 0 || month > 12
 end
 
-puts date_number(day, month, year)
+def date_number(day, month, months)
+  if correct_date?(day, month, months)
+    'Input incorrect!'
+  else
+    day + months[0..month - 2].sum
+  end
+end
+
+puts date_number(day, month, months)
