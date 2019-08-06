@@ -9,4 +9,4 @@ vowels_hash = {}
 ('a'..'z').each_with_index do |key, value|
   vowels_hash[value + 1] = key if vowels_arr.include?(key)
 end
-print vowels_hash
+print vowels_hash.invert
