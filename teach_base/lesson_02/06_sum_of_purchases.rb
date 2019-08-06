@@ -14,7 +14,7 @@
 basket = {}
 
 loop do
-  puts "Enter product, to add it in basket! Enter 'stop' if you want to stoped!"
+  puts "Enter product to add it in basket! Enter 'stop' if you want to stopped!"
   prod = gets.chomp
   break if prod.downcase == 'stop'
 
@@ -22,11 +22,15 @@ loop do
   price = gets.chomp.to_f
   puts 'Enter how match product you want to buy!'
   count = gets.chomp.to_i
-  basket[prod] = {
-    price: price,
-    count: count,
-    coast: price * count
-  }
+  if price.negative? || count.negative?
+    puts 'input incorrect! Check and repeat!'
+  else
+    basket[prod] = {
+      price: price,
+      count: count,
+      coast: price * count
+    }
+  end
 end
 
 basket_coast = 0
