@@ -14,18 +14,14 @@ month = gets.chomp.to_i
 year = gets.chomp.to_i
 months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-def leap_feb(year, months)
-  months[1] = 29 if ((year % 4).zero? && year % 100 != 0) || (year % 400).zero?
-end
+months[1] = 29 if ((year % 4).zero? && year % 100 != 0) || (year % 400).zero?
 
-leap_feb(year, months)
-
-def correct_date?(day, month, months)
-  months.at(month - 1) < day || month <= 0 || day <= 0 || month > 12
+def incorrect_date?(day, month, months)
+  months[month - 1] < day || month <= 0 || day <= 0 || month > 12
 end
 
 def date_number(day, month, months)
-  if correct_date?(day, month, months)
+  if incorrect_date?(day, month, months)
     'Input incorrect!'
   else
     day + months[0..month - 2].sum
