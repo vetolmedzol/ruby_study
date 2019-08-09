@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Class CargoTrain:
-class CargoTrain < Train
+# Class PassengerTrain:
+class PassengerTrain < Train
   def initialize(id)
     @id = id
     @number_of_cars = []
@@ -13,11 +13,11 @@ class CargoTrain < Train
   @next_position = proc {route.route_array[@position].positive?}
 
   def speed_up
-    self.speed += 10 if @speed < 100
+    self.speed += 10 if @speed < 150
   end
 
   def add_car(car)
-    if speed.zero? && car.class.to_s == 'CargoCar'
+    if speed.zero? && car.class.to_s == 'PassengerCar'
       @number_of_cars << car
     else
       'You can add cars only appropriate type!'
@@ -25,6 +25,6 @@ class CargoTrain < Train
   end
 
   def to_s
-    "cargo train #{@id}"
+    "passenger train #{@id}"
   end
 end

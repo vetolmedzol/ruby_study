@@ -21,31 +21,125 @@
 # - Unhook the cars from the train
 # - Put trains to the station
 # - View the list of stations and the list of trains at the station
-class Main
-  require_relative 'train'
-  require_relative 'cargo_train'
-  require_relative 'passanger_train'
-  require_relative 'route'
-  require_relative 'station'
 
+require_relative 'train.rb'
+require_relative 'car.rb'
+require_relative 'route.rb'
+require_relative 'station.rb'
+require_relative 'cargo_train.rb'
+require_relative 'passenger_train.rb'
+require_relative 'cargo_car.rb'
+require_relative 'passenger_car.rb'
+
+@train_arr = []
+@car_arr = []
+@station_arr = []
+@loop_condition = 'To create train/station/car, enter create.To add or ' \
+         'remove cars, enter add car or remove car !To view the list of  ' \
+         'stations, enter view all, to add train on station enter add train! ' \
+         'To stopped enter stop!'
+
+def new_cargo_train
+  puts 'Please, input id of new cargo train!'
+  id = gets.chomp
+  @train_arr << CargoTrain.new(id)
 end
-# Задание:
-# Разделить поезда на два типа PassengerTrain и CargoTrain, сделать родителя
-# для классов, который будет содержать общие методы и свойства
-# Определить, какие методы могут быть помещены в private/protected и вынести
-# их в такую секцию. В комментарии к методу обосновать, почему он был вынесен
-# в private/protected
-# Вагоны теперь делятся на грузовые и пассажирские (отдельные классы).
-# К пассажирскому поезду можно прицепить только пассажирские,
-# к грузовому - грузовые.
-# При добавлении вагона к поезду, объект вагона должен сохраняться во внутреннем
-# массиве поезда, в отличие от предыдущего задания, где мы считали только кол-во
-# вагонов. Параметр конструктора "кол-во вагонов" при этом можно удалить.
-#     Усложненное задание: создать программу в файле main.rb, которая будет
-# позволять пользователю через текстовый интерфейс делать следующее:
-# - Создавать станции
-# - Создавать поезда
-# - Добавлять вагоны к поезду
-# - Отцеплять вагоны от поезда
-# - Помещать поезда на станцию
-# - Просматривать список станций и список поездов на станции
+
+def new_passenger_train
+  puts 'Please, input id of new passenger train!'
+  id = gets.chomp
+  @train_arr << PassengerTrain.new(id)
+end
+
+def new_cargo_car
+  puts 'Enter id of cargo car!'
+  id = gets.chomp
+  @car = CargoCar.new(id)
+end
+
+def new_passenger_car
+  puts 'Enter id of passenger car!'
+  id = gets.chomp
+  @car = PassengerCar.new(id)
+end
+
+def new_station
+  puts 'Please, input name of new station!'
+  name = gets.chomp
+  @station_arr << Station.new(name)
+end
+
+def add_car
+  puts 'Enter train id!'
+  puts @train_arr
+  id = gets.chomp
+  puts 'Enter id of your car!'
+  car_id = gets.chomp
+  train_obj = @train_arr.find { |train| train.id == id }
+  car_obj = @car_arr.find { |car| car.car_id == car_id }
+  train_obj.add_car(car_obj)
+end
+
+def remove_car
+  puts 'Enter train id!'
+  puts @train_arr
+  id = gets.chomp
+  puts 'Enter id of your car!'
+  car_id = gets.chomp
+  train_obj = @train_arr.find { |train| train.id == id }
+  car_obj = @car_arr.find { |car| car.car_id == car_id }
+  train_obj.remove_car(car_obj)
+end
+
+def add_train
+  puts 'Choose station from list, and enter train id from list!'
+  puts @station_arr
+  puts @train_arr
+  name = gets.chomp
+  id = gets.chomp
+  station_obj = @station_arr.find { |station| station.name == name }
+  train_obj = @train_arr.find { |train| train.id == id }
+  station_obj.add_train(train_obj)
+end
+
+def creator(input_object)
+  case input_object
+  when 'cargo train' then new_cargo_train
+  when 'passenger train' then new_passenger_train
+  when 'station' then new_station
+  when 'cargo car' then new_cargo_car
+  when 'passenger car' then new_passenger_car
+  else
+    'Incorrect input!'
+  end
+end
+
+loop do
+  puts @loop_condition
+  input = gets.chomp
+  break if input.downcase == 'stop'
+
+  case input
+  when 'create'
+    loop do
+      puts 'Enter object do you want to create! To stopped enter stop!'
+      input_object = gets.chomp
+      break if input_object.downcase == 'stop'
+
+      creator(input_object)
+    end
+  when 'view all' then puts @station_arr, @train_arr
+  when 'add train' then add_train
+  when 'resize'
+    puts 'You want to add or remove car?'
+    add_or_del = gets.chomp
+    case add_or_del
+    when 'add' then add_car
+    when 'remove' then remove_car
+    else
+      'Make a choice, add or remove!'
+    end
+  else
+    'Incorrect input!'
+  end
+end

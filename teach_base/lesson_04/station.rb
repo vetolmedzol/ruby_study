@@ -10,20 +10,21 @@
 # The train is removed from the list of trains used at the station.
 class Station
   attr_accessor :name
+
   def initialize(name)
     @name = name
     @train_array = []
     @pass_array = []
-    @freight_array = []
+    @cargo_array = []
   end
 
   def add_train(train)
     puts "#{train} in the station #{@name}!"
     @train_array << train.to_s
-    if train.train_type == 'passanger'
+    if train.class.to_s == 'PassengerTrain'
       @pass_array << train.to_s
-    elsif train.train_type == 'freight'
-      @freight_array << train.to_s
+    elsif train.class.to_s == 'CargoTrain'
+      @cargo_array << train.to_s
     end
   end
 
@@ -32,7 +33,7 @@ class Station
   end
 
   def train_type_list
-    "Passanger list #{@pass_array},  freight list #{@freight_array}"
+    "Passanger list #{@pass_array},  cargo list #{@cargo_array}"
   end
 
   def send_train(train)

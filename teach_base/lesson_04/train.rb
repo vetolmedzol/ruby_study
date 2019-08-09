@@ -16,18 +16,18 @@
 # It can move between stations indicated in the route.
 # Show previous station, current, next, based on route
 class Train
-  attr_accessor :speed, :id, :number_of_cars, :train_type
+  attr_accessor :speed, :id
 
-  def initialize(id, train_type, number_of_cars = 5)
+  def initialize(id)
     @id = id
-    @train_type = train_type
-    @number_of_cars = number_of_cars
+    @number_of_cars = []
     @speed = 0
     @position = 0
+    @train_type = self.class.to_s
   end
 
-  @prev_position = proc { route.route_array[@position - 1].positive? }
-  @next_position = proc { route.route_array[@position].positive? }
+  @prev_position = proc {route.route_array[@position - 1].positive?}
+  @next_position = proc {route.route_array[@position].positive?}
 
   def current_speed
     @speed
@@ -45,12 +45,12 @@ class Train
     @number_of_cars
   end
 
-  def add_car
-    self.number_of_cars += 1 if speed.zero?
+  def add_car(car)
+    @number_of_cars << car if speed.zero?
   end
 
-  def remove_car
-    self.number_of_cars -= 1 if speed.zero? && number_of_cars.positive?
+  def remove_car(car)
+    @number_of_cars.delete(car) if speed.zero? && @number_of_cars.size.positive?
   end
 
   def current_position(route)
@@ -63,10 +63,4 @@ class Train
     @position += 1 unless route.route_array[@position + 1].nil?
     route.route_array[@position]
   end
-
-  def move_back(route)
-    @position -= 1 unless route.route_array[@position - 1].nil?
-    route.route_array[@position]
-  end
-
 end

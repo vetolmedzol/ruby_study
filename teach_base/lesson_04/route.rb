@@ -10,6 +10,7 @@
 # It can list all stations in order from start to end
 class Route
   attr_accessor :route_array
+
   def initialize(start_station, end_station)
     @start_station = start_station.name
     @end_station = end_station.name
