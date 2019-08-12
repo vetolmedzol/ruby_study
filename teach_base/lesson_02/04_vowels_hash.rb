@@ -6,7 +6,7 @@
 vowels_arr = %w[a e i o u y]
 vowels_hash = {}
 
-('a'..'z').each_with_index do |key, value|
-  vowels_hash[value + 1] = key if vowels_arr.include?(key)
+('a'..'z').each_with_index do |item, index|
+  vowels_hash[item] = index + 1 if vowels_arr.include?(item)
 end
-print vowels_hash.invert
+print vowels_hash
