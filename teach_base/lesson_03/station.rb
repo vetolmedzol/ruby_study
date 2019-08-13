@@ -8,22 +8,28 @@
 # It can show the list of trains at the station (see below):
 # number of freight, passenger
 # The train is removed from the list of trains used at the station.
+require_relative 'train.rb'
 class Station
   attr_accessor :name
+
   def initialize(name)
     @name = name
     @train_array = []
-    @pass_array = []
-    @freight_array = []
+    @passenger_array = []
+    @cargo_array = []
   end
 
   def add_train(train)
-    puts "#{train} in the station #{@name}!"
-    @train_array << train.to_s
-    if train.train_type == 'passanger'
-      @pass_array << train.to_s
-    elsif train.train_type == 'freight'
-      @freight_array << train.to_s
+    if train.class == Train
+      puts "#{train} in the station #{@name}!"
+      @train_array << train
+      if train.train_type == :passenger
+        @passenger_array << train
+      elsif train.train_type == :freight
+        @cargo_array << train
+      end
+    else
+      'You can add only Train!'
     end
   end
 
@@ -32,15 +38,20 @@ class Station
   end
 
   def train_type_list
-    "Passanger list #{@pass_array},  freight list #{@freight_array}"
+    "Passenger list #{@passenger_array},  cargo list #{@cargo_array}"
   end
 
   def send_train(train)
-    @train_array.delete(train.to_s)
+    @train_array.delete(train)
     "#{train} is left! Choo-chooo!"
+    if train.train_type == :passenger
+      @passenger_array.delete(train)
+    elsif train.train_type == :freight
+      @cargo_array.delete(train)
+    end
   end
 
   def to_s
-    @name
+    "station  #{@name}"
   end
 end
