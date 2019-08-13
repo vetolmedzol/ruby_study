@@ -19,12 +19,13 @@ class Station
   end
 
   def add_train(train)
-    puts "#{train} in the station #{@name}!"
-    @train_array << train.to_s
-    if train.class.to_s == 'PassengerTrain'
-      @pass_array << train.to_s
-    elsif train.class.to_s == 'CargoTrain'
-      @cargo_array << train.to_s
+    if train.class == Train
+      puts "#{train} in the station #{@name}!"
+      @train_array << train
+      @passenger_array << train if train.train_type == :passenger
+      @cargo_array << train if train.train_type == :freight
+    else
+      'You can add only Train!'
     end
   end
 
@@ -37,8 +38,12 @@ class Station
   end
 
   def send_train(train)
-    @train_array.delete(train.to_s)
-    "#{train} is left! Choo-chooo!"
+    @train_array.delete(train)
+    if train.train_type == :passenger
+      @passenger_array.delete(train)
+    elsif train.train_type == :freight
+      @cargo_array.delete(train)
+    end
   end
 
   def to_s

@@ -12,19 +12,25 @@ class Route
   attr_accessor :route_array
 
   def initialize(start_station, end_station)
-    @start_station = start_station.name
-    @end_station = end_station.name
+    @start_station = start_station
+    @end_station = end_station
     @route_array = [@start_station, @end_station]
   end
 
   def add_station(station)
-    @route_array.delete(@end_station)
-    @route_array << station.name
-    @route_array << @end_station
+    if @route_array.include?(station)
+      'Station is already in your route!'
+    else
+      @route_array.insert(-2, station)
+    end
   end
 
-  def remove_station(name)
-    @route_array.delete(name)
+  def remove_station(station)
+    if station.eql?(@start_station || @end_station)
+      'You can not remove first or last station!'
+    else
+      @route_array.delete(station)
+    end
   end
 
   def station_list

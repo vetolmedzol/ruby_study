@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Class Car
 class Car
   attr_accessor :capacity, :car_id
 

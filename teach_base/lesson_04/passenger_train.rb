@@ -7,17 +7,23 @@ class PassengerTrain < Train
     @number_of_cars = []
     @speed = 0
     @position = 0
+    @route = nil
   end
 
-  @prev_position = proc {route.route_array[@position - 1].positive?}
-  @next_position = proc {route.route_array[@position].positive?}
+  def prev_position?
+    !@route.route_array[@position - 1].nil?
+  end
+
+  def next_position?
+    !@route.route_array[@position].nil?
+  end
 
   def speed_up
     self.speed += 10 if @speed < 150
   end
 
   def add_car(car)
-    if speed.zero? && car.class.to_s == 'PassengerCar'
+    if speed.zero? && car.class == PassengerCar
       @number_of_cars << car
     else
       'You can add cars only appropriate type!'

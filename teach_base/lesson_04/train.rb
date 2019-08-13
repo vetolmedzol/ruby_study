@@ -18,16 +18,28 @@
 class Train
   attr_accessor :speed, :id
 
-  def initialize(id)
+  def initialize(id, train_type, number_of_cars = 5)
     @id = id
-    @number_of_cars = []
+    train_type = :passenger unless correct_train_type?(train_type)
+    @train_type = train_type.to_sym
+    @number_of_cars = number_of_cars
     @speed = 0
     @position = 0
-    @train_type = self.class.to_s
+    @route = nil
   end
 
-  @prev_position = proc {route.route_array[@position - 1].positive?}
-  @next_position = proc {route.route_array[@position].positive?}
+  def correct_train_type?(train_type)
+    train_type_arr = [:cargo, :passenger, 'cargo', 'passenger']
+    train_type_arr.include?(train_type)
+  end
+
+  def prev_position?
+    !@route.route_array[@position - 1].nil?
+  end
+
+  def next_position?
+    !@route.route_array[@position].nil?
+  end
 
   def current_speed
     @speed
@@ -53,14 +65,20 @@ class Train
     @number_of_cars.delete(car) if speed.zero? && @number_of_cars.size.positive?
   end
 
-  def current_position(route)
-    "Previous station #{route.route_array[@position - 1]}" if @prev_position
-    "Next station is #{route.route_array[@position + 1]}" if @next_position
-    "Current station #{route.route_array[@position]}"
+  def current_position
+    "Previous station #{@route.route_array[@position - 1]}" if prev_position?
+    "Next station is #{@route.route_array[@position + 1]}" if next_position?
+    "Current station #{@route.route_array[@position]}"
   end
 
-  def move_forward(route)
-    @position += 1 unless route.route_array[@position + 1].nil?
-    route.route_array[@position]
+  def move_forward
+    if @route.route_array[@position] == @route.route_array.last
+      'You at the end!'
+    else
+      @position += 1 unless @route.route_array[@position + 1].nil?
+      @route.route_array[@position - 1].send_train(self)
+      @route.route_array[@position].add_train(self)
+      @route.route_array[@position]
+    end
   end
 end

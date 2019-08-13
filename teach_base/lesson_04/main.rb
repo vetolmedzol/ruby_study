@@ -35,8 +35,8 @@ require_relative 'passenger_car.rb'
 @car_arr = []
 @station_arr = []
 @loop_condition = 'To create train/station/car, enter create.To add or ' \
-         'remove cars, enter add car or remove car !To view the list of  ' \
-         'stations, enter view all, to add train on station enter add train! ' \
+         'remove cars, enter resize! To view the list of stations, enter ' \
+          'view all, to add train on station enter add train! ' \
          'To stopped enter stop!'
 
 def new_cargo_train
@@ -122,9 +122,9 @@ loop do
   case input
   when 'create'
     loop do
-      puts 'Enter object do you want to create! To stopped enter stop!'
+      puts 'Enter object do you want to create!To come back to menu enter back!'
       input_object = gets.chomp
-      break if input_object.downcase == 'stop'
+      break if input_object.downcase == 'back'
 
       creator(input_object)
     end
