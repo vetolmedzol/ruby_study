@@ -15,9 +15,14 @@
 # Can take a route (object of class Route)
 # It can move between stations indicated in the route.
 # Show previous station, current, next, based on route
+require_relative 'instance_counter'
+require_relative 'company'
+# class Train
 class Train
+  include InstanceCounter
   include Company
-  attr_accessor :speed, :id
+  attr_accessor :speed, :id, :train_type
+  attr_writer :route
 
   def initialize(id, train_type, number_of_cars = 5)
     @id = id
@@ -27,6 +32,15 @@ class Train
     @speed = 0
     @position = 0
     @route = nil
+    register_instance
+  end
+
+  def self.find(train_id)
+    ObjectSpace.each_object(self).to_a.find { |train| train.id == train_id }
+  end
+
+  def self.all
+    ObjectSpace.each_object(self).to_a
   end
 
   def correct_train_type?(train_type)
@@ -72,14 +86,18 @@ class Train
     "Current station #{@route.route_array[@position]}"
   end
 
+  def moving
+    @position += 1 unless @route.route_array[@position + 1].nil?
+    @route.route_array[@position - 1].send_train(self)
+    @route.route_array[@position].add_train(self)
+    @route.route_array[@position]
+  end
+
   def move_forward
     if @route.route_array[@position] == @route.route_array.last
       'You at the end!'
     else
-      @position += 1 unless @route.route_array[@position + 1].nil?
-      @route.route_array[@position - 1].send_train(self)
-      @route.route_array[@position].add_train(self)
-      @route.route_array[@position]
+      moving
     end
   end
 end

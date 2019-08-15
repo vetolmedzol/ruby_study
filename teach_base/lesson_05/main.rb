@@ -22,15 +22,16 @@
 # - Put trains to the station
 # - View the list of stations and the list of trains at the station
 
-require_relative 'train.rb'
-require_relative 'car.rb'
-require_relative 'route.rb'
-require_relative 'station.rb'
-require_relative 'cargo_train.rb'
-require_relative 'passenger_train.rb'
-require_relative 'cargo_car.rb'
-require_relative 'passenger_car.rb'
-require_relative 'company.rb'
+require_relative 'train'
+require_relative 'car'
+require_relative 'route'
+require_relative 'station'
+require_relative 'cargo_train'
+require_relative 'passenger_train'
+require_relative 'cargo_car'
+require_relative 'passenger_car'
+require_relative 'instance_counter'
+require_relative 'company'
 
 @train_arr = []
 @car_arr = []
@@ -144,21 +145,3 @@ loop do
     'Incorrect input!'
   end
 end
-
-# В классе Station (жд станция) создать метод класса all, который возвращает
-# все станции (объекты), созданные на данный момент
-# В классе Train создать метод класса find, который принимает номер поезда
-# (указанный при его создании) и возвращает объект поезда по номеру или nil,
-#  если поезд с таким номером не найден.
-#  Усложенное задание (выполнять только если есть время и желание разобраться):
-#  Создать модуль InstanceCounter, содержащий следующие методы класса и
-# инстанс-методы, которые подключаются автоматически при вызове include в
-# классе:
-# Методы класса:
-#     - instances, который возвращает кол-во экземпляров данного класса
-# Инастанс-методы:
-#     - register_instance, который увеличивает счетчик кол-ва экземпляров класса
-# и который можно вызвать из конструктора. При этом данный метод не
-# должен быть публичным.
-
-

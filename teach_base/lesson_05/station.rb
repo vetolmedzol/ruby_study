@@ -8,18 +8,23 @@
 # It can show the list of trains at the station (see below):
 # number of freight, passenger
 # The train is removed from the list of trains used at the station.
+
+require_relative 'instance_counter'
+# class Station
 class Station
+  include InstanceCounter
   attr_accessor :name
 
   def initialize(name)
     @name = name
     @train_array = []
-    @pass_array = []
+    @passenger_array = []
     @cargo_array = []
+    register_instance
   end
 
   def self.all
-
+    ObjectSpace.each_object(self).to_a
   end
 
   def add_train(train)
@@ -38,7 +43,7 @@ class Station
   end
 
   def train_type_list
-    "Passanger list #{@pass_array},  cargo list #{@cargo_array}"
+    "Passenger list #{@passenger_array},  cargo list #{@cargo_array}"
   end
 
   def send_train(train)

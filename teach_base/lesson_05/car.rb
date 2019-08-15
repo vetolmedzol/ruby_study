@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'company'
+
 # Class Car
 class Car
   include Company

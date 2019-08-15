@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require_relative 'train'
 # Class CargoTrain:
 class CargoTrain < Train
   include Company
   def initialize(id)
     @id = id
+    @train_type = :cargo
     @number_of_cars = []
     @speed = 0
     @position = 0

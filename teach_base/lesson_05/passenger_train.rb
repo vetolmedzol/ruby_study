@@ -5,6 +5,7 @@ class PassengerTrain < Train
   include Company
   def initialize(id)
     @id = id
+    @train_type = :passenger
     @number_of_cars = []
     @speed = 0
     @position = 0
