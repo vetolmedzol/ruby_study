@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# Class Route:
-
 # It has a start and end station, as well as a list of intermediate stations.
 # The startingand ending stations are indicated when creating a route,
 # and intermediate stations can be added between them.
@@ -10,8 +8,10 @@
 # It can list all stations in order from start to end
 require_relative 'station.rb'
 require_relative 'train.rb'
+# Class Route:
 class Route
   attr_accessor :route_array
+
   def initialize(start_station, end_station)
     @start_station = start_station
     @end_station = end_station

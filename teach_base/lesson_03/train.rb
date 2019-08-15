@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# Class Train:
-
 # It has a number (arbitrary line) and type (freight, passenger)
 # and the number of cars, these data are indicated when creating
 # an instance of the class
@@ -17,6 +15,7 @@
 # Show previous station, current, next, based on route
 require_relative 'station.rb'
 require_relative 'route.rb'
+# Class Train:
 class Train
   attr_accessor :speed, :id, :number_of_cars, :train_type
 
@@ -31,8 +30,8 @@ class Train
   end
 
   def correct_train_type?(train_type)
-    train_type_arr = [:cargo, :passenger]
-    train_type_arr.include?(train_type.to_sym)
+    train_type_arr = [:cargo, :passenger, 'cargo', 'passenger']
+    train_type_arr.include?(train_type)
   end
 
   def prev_position?
@@ -73,14 +72,18 @@ class Train
     "Current station #{@route.route_array[@position]}"
   end
 
+  def moving
+    @position += 1 unless @route.route_array[@position + 1].nil?
+    @route.route_array[@position - 1].send_train(self)
+    @route.route_array[@position].add_train(self)
+    @route.route_array[@position]
+  end
+
   def move_forward
     if @route.route_array[@position] == @route.route_array.last
       'You at the end!'
     else
-      @position += 1 unless @route.route_array[@position + 1].nil?
-      @route.route_array[@position - 1].send_train(self)
-      @route.route_array[@position].add_train(self)
-      @route.route_array[@position]
+      moving
     end
   end
 

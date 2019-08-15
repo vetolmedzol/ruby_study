@@ -9,6 +9,7 @@
 # number of freight, passenger
 # The train is removed from the list of trains used at the station.
 require_relative 'train.rb'
+# Station Class:
 class Station
   attr_accessor :name
 
@@ -23,11 +24,8 @@ class Station
     if train.class == Train
       puts "#{train} in the station #{@name}!"
       @train_array << train
-      if train.train_type == :passenger
-        @passenger_array << train
-      elsif train.train_type == :freight
-        @cargo_array << train
-      end
+      @passenger_array << train if train.train_type == :passenger
+      @cargo_array << train if train.train_type == :freight
     else
       'You can add only Train!'
     end
@@ -43,7 +41,6 @@ class Station
 
   def send_train(train)
     @train_array.delete(train)
-    "#{train} is left! Choo-chooo!"
     if train.train_type == :passenger
       @passenger_array.delete(train)
     elsif train.train_type == :freight
