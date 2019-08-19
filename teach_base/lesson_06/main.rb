@@ -41,8 +41,6 @@ require_relative 'company'
           'view all, to add train on station enter add train! ' \
          'To stopped enter stop!'
 
-
-
 def new_cargo_train
   puts 'Please, input id of new cargo train!'
   id = gets.chomp
@@ -64,6 +62,8 @@ end
 def new_cargo_car
   puts 'Enter id of cargo car!'
   id = gets.chomp
+  @car = CargoCar.new(id)
+  puts "You created a #{@car}"
 rescue StandardError => e
   puts e.inspect
 end
