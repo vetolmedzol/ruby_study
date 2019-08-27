@@ -20,13 +20,6 @@ require_relative 'company'
  ' enter add train, to see train or station info enter train info or station' \
  ' info! To take place in car, enter take place! To stopped enter stop!'
 
-cargo_train = CargoTrain.new('12345')
-cargo_car = CargoCar.new
-station = Station.new('Kharkov')
-@train_arr << cargo_train
-@car_arr << cargo_car
-@station_arr << station
-
 def car_choice(car_obj)
   if car_obj.class == CargoCar
     puts 'Input how much volume you need!'
